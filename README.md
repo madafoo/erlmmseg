@@ -1,0 +1,2 @@
+# erlmmseg
+mmseg erlang nif
