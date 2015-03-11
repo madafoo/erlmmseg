@@ -72,7 +72,18 @@ static ERL_NIF_TERM seg(ErlNifEnv *env, int, const ERL_NIF_TERM argv[])
         return enif_make_list_from_array(env, &terms[0], terms.size());
     }
 
-    char *text = (char*) bin.data;
+    if(bin.size == 0) {
+        return enif_make_list_from_array(env, &terms[0], terms.size());
+    }
+
+    char *text = (char*) malloc(sizeof(char) * bin.size + 1);
+    if (text == NULL) {
+        delete seg;
+        return enif_make_list_from_array(env, &terms[0], terms.size());
+    }
+    memcpy(text, bin.data, bin.size);
+    text[bin.size] = 0;
+
     size_t size = bin.size;
     seg->setBuffer((u1*)text, size);
 
@@ -95,6 +106,7 @@ static ERL_NIF_TERM seg(ErlNifEnv *env, int, const ERL_NIF_TERM argv[])
         seg->popToken(len);
     }
     delete seg;
+    free(text);
     return enif_make_list_from_array(env, &terms[0], terms.size());
 }
 
