@@ -1,0 +1,13 @@
+%% -*- mode: erlang -*-
+
+{application, erlmmseg,
+ [
+  {description, "erlmmseg"},
+  {vsn, git},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.
